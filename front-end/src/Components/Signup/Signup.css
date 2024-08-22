@@ -3,11 +3,12 @@
     flex-direction: column;
     align-items: center;
     margin: auto;
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.8);
     padding-bottom: 30px;
     width: 50%;
     height: 80vh;
     padding: 0;
+    border-radius: 30px;
 }
 
 .signup-container .header{
@@ -40,7 +41,7 @@
     background: transparent;
     color: #797979;
     font-size: 19px;
-    margin-left: 20px;
+    margin-left: 10px;
     margin-right: 20px;
 }
 

@@ -57,10 +57,10 @@ function Signup() {
           </div>
 
           <div className="signup-submit-container">
-            <button type="submit" className="btn">
+            <button type="submit" className="btn submit-btn">
               Sign Up
             </button>
-            <a className="btn" href="/">
+            <a className="btn change-btn" href="/">
               Log In
             </a>
           </div>

@@ -1,0 +1,13 @@
+.home-body {
+    height: 100vh;
+    background: linear-gradient(#014b9a, #00556c);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  font-size: 48px;
+  font-family: Arial, sans-serif;
+  font-style: italic;
+}

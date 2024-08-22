@@ -54,10 +54,10 @@ function Login() {
           </div>
 
           <div className="submit-container">
-            <a className="btn" href="/signup">
+            <a className="btn change-btn" href="/signup">
               Sign Up
             </a>
-            <button type="submit" className="btn">
+            <button type="submit" className="btn submit-btn">
               Log In
             </button>
           </div>
