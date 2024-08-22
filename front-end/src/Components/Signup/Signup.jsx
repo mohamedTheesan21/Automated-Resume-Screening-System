@@ -20,7 +20,7 @@ function Signup() {
         </div>
         <form onSubmit={handleSubmit}>
           <div className="input">
-            {/* <label>Email</label> */}
+            <i class="fa-solid fa-house fa-lg"></i>
             <input
               type="text"
               value={companyName}
@@ -29,7 +29,7 @@ function Signup() {
             />
           </div>
           <div className="input">
-            {/* <label>Email</label> */}
+            <i class="fa-solid fa-envelope fa-lg"></i>
             <input
               type="email"
               value={email}
@@ -38,7 +38,7 @@ function Signup() {
             />
           </div>
           <div className="input">
-            {/* <label>Email</label> */}
+            <i class="fa-solid fa-lock fa-lg"></i>
             <input
               type="password"
               value={password}
@@ -47,7 +47,7 @@ function Signup() {
             />
           </div>
           <div className="input">
-            {/* <label>Password</label> */}
+            <i class="fa-solid fa-lock fa-lg"></i>
             <input
               type="password"
               value={confirmPassword}

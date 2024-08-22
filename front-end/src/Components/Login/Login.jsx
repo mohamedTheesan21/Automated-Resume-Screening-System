@@ -6,7 +6,6 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -14,7 +13,7 @@ function Login() {
   const hanldeSubmit = (e) => {
     e.preventDefault();
     console.log(email, password);
-  }
+  };
 
   return (
     <div className="body">
@@ -25,7 +24,7 @@ function Login() {
         </div>
         <form onSubmit={hanldeSubmit}>
           <div className="input">
-            {/* <label>Email</label> */}
+            <i class="fa-solid fa-envelope fa-xl"></i>
             <input
               type="email"
               value={email}
@@ -33,8 +32,8 @@ function Login() {
               placeholder="Email"
             />
           </div>
-          <div className="input" style={{position: "relative"}}>
-            {/* <label>Email</label> */}
+          <div className="input" style={{ position: "relative" }}>
+            <i class="fa-solid fa-lock fa-xl"></i>
             <input
               type={showPassword ? "text" : "password"}
               value={password}
@@ -53,16 +52,15 @@ function Login() {
               ></i>
             )}
           </div>
-        
 
-        <div className="submit-container">
-          <a className="btn" href="/signup">
-            Sign Up
-          </a>
-          <button type="submit" className="btn">
-            Log In
-          </button>
-        </div>
+          <div className="submit-container">
+            <a className="btn" href="/signup">
+              Sign Up
+            </a>
+            <button type="submit" className="btn">
+              Log In
+            </button>
+          </div>
         </form>
       </div>
     </div>
