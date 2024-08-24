@@ -8,11 +8,20 @@ function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const setEmpty = () => {
+    setCompanyName("");
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      alert("password are not mathcing");
+      setError("password and confirm password do not match");
+      setEmpty();
       return;
     }
 
@@ -33,15 +42,17 @@ function Signup() {
 
       if (response.ok) {
         const data = await response.json();
-        alert(data.msg);
         navigate("/");
       } else {
         const errorData = await response.json();
-        alert(`Error: ${errorData.detail}`);
+        setError(errorData.detail);
+        setEmpty();
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Something went wrong!");
+      setError("something went wrong!");
+      setEmpty();
+      
     }
   };
 
@@ -89,7 +100,7 @@ function Signup() {
               placeholder="Confirm password"
             />
           </div>
-
+          {error && <p className="error">{error}</p>}
           <div className="signup-submit-container">
             <button type="submit" className="btn submit-btn">
               Sign Up

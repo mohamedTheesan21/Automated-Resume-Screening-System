@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, EmailStr
 from passlib.context import CryptContext
 from Database import add_user, user_exists
-from Models import UserModel
+from Models import UserModel, UserAuth
 
 app = FastAPI()
 
@@ -43,13 +43,13 @@ async def signup(user: UserModel):
     return {"msg": "User created successfully"}
 
 @app.post("/login")
-async def login(email: EmailStr, password: str):
-    user = await user_exists(email)
-    if not user:
+async def login(user: UserAuth):
+    existing_user = await user_exists(user.email)
+    if not existing_user:
         raise HTTPException(status_code=404, detail="User not found")
     
     # Verify the password
-    if not verify_password(password, user["password"]):
+    if not verify_password(user.password, existing_user["password"]):
         raise HTTPException(status_code=400, detail="Invalid password")
     
     return {"msg": "Login successful"}

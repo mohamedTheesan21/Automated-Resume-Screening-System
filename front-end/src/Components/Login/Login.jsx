@@ -1,19 +1,49 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
 function Login() {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  const hanldeSubmit = (e) => {
+  const hanldeSubmit = async (e) => {
     e.preventDefault();
-    console.log(email, password);
-  };
+    const userData = {
+      email: email,
+      password: password,
+    };
+
+    try{
+      const response = await fetch("http://127.0.0.1:8000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        navigate("/home");
+      } else {
+        const errorData = await response.json();
+        setError(errorData.detail);
+        setEmail("");
+        setPassword("");
+      }
+  } catch (error) {
+    console.error("Error:", error);
+    setError("something went wrong!")
+    setEmail("");
+    setPassword("");
+  }
+}
 
   return (
     <div className="body">
@@ -52,7 +82,7 @@ function Login() {
               ></i>
             )}
           </div>
-
+          {error && <p className="error">{error}</p>}
           <div className="submit-container">
             <a className="btn change-btn" href="/signup">
               Sign Up

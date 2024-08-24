@@ -83,7 +83,7 @@
 .submit-container {
   display: flex;
   gap: 30px;
-  margin: 30px auto;
+  margin: 15px auto;
 }
 
 .submit-container a {
@@ -97,7 +97,7 @@
   justify-content: center;
   align-items: center;
   width: 200px;
-  height: 60px;
+  height: 50px;
   color: #fff;
   background-color: #4c00b4;
   border-radius: 50px;
@@ -125,4 +125,11 @@
 
 .fa-solid {
   margin-left: 10px;
+}
+
+.error{
+  color: red;
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0 30px;
 }
