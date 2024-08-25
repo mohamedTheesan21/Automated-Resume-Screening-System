@@ -55,7 +55,7 @@ function PdfUploader() {
         </ul>
       )}
       <div className="buttons">
-      <button className="upload-btn" onClick={handleFileUpload} style={{marginBottom: "10px"}}>Upload PDFs</button>
+      <button className="upload-btn" onClick={handleFileUpload} style={{marginBottom: "10px"}}>Upload CVs</button>
       {selectedFiles.length > 0 && <button className="cancel-btn" onClick={handleCancel}>Cancel</button>}
       </div>
     </div>

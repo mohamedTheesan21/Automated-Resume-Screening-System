@@ -3,6 +3,7 @@
     background-color: #e7e9ea;
     /* background: linear-gradient(#014b9a, #00556c); */
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
