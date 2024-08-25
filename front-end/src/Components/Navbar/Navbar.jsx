@@ -1,7 +1,15 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import "./Navbar.css"
 
 function Navbar() {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        localStorage.removeItem("token");
+        navigate("/");
+    }
+
     return (
         <div >
             <nav className="navbar navbar-expand-lg nav-bar" style={{height: "10vh"}}>
@@ -17,6 +25,9 @@ function Navbar() {
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href="/contactus">Contact Us</a>
+                            </li>
+                            <li className="nav-item">
+                                <button className="logout-btn" onClick={handleClick}>Log out</button>
                             </li>
                         </ul>
                     </div>

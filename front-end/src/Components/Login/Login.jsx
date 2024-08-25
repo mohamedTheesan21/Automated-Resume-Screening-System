@@ -30,6 +30,7 @@ function Login() {
       });
       if (response.ok) {
         const data = await response.json();
+        localStorage.setItem("token", data.access_token);
         navigate("/home");
       } else {
         const errorData = await response.json();

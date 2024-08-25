@@ -1,9 +1,19 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, EmailStr
 from passlib.context import CryptContext
 from Database import add_user, user_exists
 from Models import UserModel, UserAuth
+
+from datetime import timedelta, datetime, timezone
+from typing import Optional
+
+from dotenv import load_dotenv
+import os
+
+# JWT authentication
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from jose import JWTError, jwt
+
 
 app = FastAPI()
 
@@ -16,11 +26,28 @@ app.add_middleware(
     allow_headers=["*"],  # Allows all headers
 )
 
+# Load environment variables from .env file
+load_dotenv()
+
+secret_key = os.getenv("SECRET_KEY")
+algorithm = os.getenv("ALGORITHM")
+token_expiration = os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES")
+
 # Password hashing
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-# Simulated database
-fake_users_db = {}
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
+# JWT Token Creation
+def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
+    to_encode = data.copy()
+    if expires_delta:
+        expire = datetime.now(timezone.utc) + expires_delta
+    else:
+        expire = datetime.now(timezone.utc) + timedelta(minutes=15)
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(to_encode, secret_key, algorithm=algorithm)
+    return encoded_jwt
 
 def hash_password(password: str):
     return pwd_context.hash(password)
@@ -52,7 +79,39 @@ async def login(user: UserAuth):
     if not verify_password(user.password, existing_user["password"]):
         raise HTTPException(status_code=400, detail="Invalid password")
     
-    return {"msg": "Login successful"}
+    token_expiration_minutes = int(token_expiration)
+    
+    # create jwt token
+    access_token_expires = timedelta(minutes=token_expiration_minutes)
+    access_token = create_access_token(
+        data={"sub": user.email}, expires_delta=access_token_expires
+    )
+    
+    return {"access_token": access_token, "token_type": "bearer"}
+
+
+# Dependency to get current user
+async def get_current_user(token: str = Depends(oauth2_scheme)):
+    credentials_exception = HTTPException(
+        status_code=401,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    try:
+        payload = jwt.decode(token, secret_key, algorithms=[algorithm])
+        email: str = payload.get("sub")
+        if email is None:
+            raise credentials_exception
+    except JWTError:
+        raise credentials_exception
+    user = await user_exists(email)
+    if user is None:
+        raise credentials_exception
+    return user
+
+@app.get("/protected")
+async def protected_route(current_user: UserModel = Depends(get_current_user)):
+    return {"user": current_user}
     
     
 

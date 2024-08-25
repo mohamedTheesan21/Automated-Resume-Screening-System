@@ -28,7 +28,7 @@
     flex-direction: row;
     justify-content: space-between;
     margin: 15px 15px 0 0;
-    width: 20vw;
+    width: 25vw;
 }
 
 .nav-item{
@@ -39,4 +39,17 @@
     text-decoration: none;
     color: black;
     font-size: 15px;
+}
+
+.logout-btn{
+    background-color: white;
+    border-color: black;
+    height: 30px;
+    width: 80px;
+    border-radius: 15px;
+}
+
+.logout-btn:hover{
+    background-color: black;
+    color: white;
 }
