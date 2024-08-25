@@ -25,6 +25,10 @@ function PdfUploader() {
     event.preventDefault();
   };
 
+  const handleCancel = () => {
+    setSelectedFiles([]);
+  }
+
   return (
     <div>
       <input
@@ -44,13 +48,16 @@ function PdfUploader() {
       </label>
       
       {selectedFiles.length > 0 && (
-        <ul>
+        <ul className="pdfs">
           {selectedFiles.map((file, index) => (
-            <li key={index}>{file.name}</li>
+            <li key={index}><i class="fa-solid fa-file-pdf" style={{color: "#da1010"}}></i> {file.name}</li>
           ))}
         </ul>
       )}
-      <button className="upload-btn" onClick={handleFileUpload}>Upload PDFs</button>
+      <div className="buttons">
+      <button className="upload-btn" onClick={handleFileUpload} style={{marginBottom: "10px"}}>Upload PDFs</button>
+      {selectedFiles.length > 0 && <button className="cancel-btn" onClick={handleCancel}>Cancel</button>}
+      </div>
     </div>
   );
 }

@@ -13,9 +13,13 @@
   margin-top: 10px;
 }
 
+.upload-btn:hover {
+  background-color: #4c00b4;
+}
+
 .file-input-label {
-  height: 100px;
-  width: 80%;
+  height: 90px;
+  width: 70vw;
   border: 2px dashed #cccccc;
   padding: 20px;
   cursor: pointer;
@@ -42,4 +46,63 @@
 
 .bounce {
   animation: bounce 1s infinite;
+}
+
+/* Style for the list of PDF files */
+.pdfs {
+  max-height: 180px;
+  width: 75vw;
+  overflow-y: auto; /* Make the list scrollable if it exceeds the max-height */
+  padding: 0;
+  margin: 0;
+  margin-top: 10px;
+  list-style-type: none; /* Remove the default list dots */
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+/* Style for each list item */
+.pdfs li {
+  padding: 8px;
+  border-bottom: 1px solid #ddd; /* Add a border between items */
+  font-size: 14px; /* Font size for list items */
+  color: #333; /* Font color for list items */
+}
+
+/* Remove the border for the last item */
+.pdfs li:last-child {
+  border-bottom: none;
+}
+
+.pdfs li:hover{
+  background-color: #044691;
+  color: white;
+}
+
+/* Styles for buttons div */
+.buttons {
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+}
+
+/* Styles for the delete button */
+.cancel-btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 30px;
+  color: #fff;
+  background-color: #ff0000;
+  border-radius: 25px;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  margin: 10px 0 0 10px;
+}
+
+.cancel-btn:hover {
+  background-color: #ff4d4d;
 }

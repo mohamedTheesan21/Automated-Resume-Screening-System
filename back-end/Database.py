@@ -1,7 +1,14 @@
 from motor.motor_asyncio import AsyncIOMotorClient
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
+
+database_url = os.getenv("DB_URL")
 
 # Create a client instance
-conn = AsyncIOMotorClient("mongodb+srv://admin:12345@myatlasclusteredu.zdyf7zp.mongodb.net/ARSS_DB")
+conn = AsyncIOMotorClient(database_url)
 db = conn.ARSS_DB
 
 # Retrieve all users
