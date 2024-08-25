@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Signup.css";
 import { useNavigate } from "react-router-dom";
+import Loading from "../Loading/Loading";
 
 function Signup() {
   const navigate = useNavigate();
@@ -9,6 +10,7 @@ function Signup() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const setEmpty = () => {
     setCompanyName("");
@@ -18,6 +20,7 @@ function Signup() {
   }
 
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     if (password !== confirmPassword) {
       setError("password and confirm password do not match");
@@ -54,7 +57,13 @@ function Signup() {
       setEmpty();
       
     }
+    setLoading(false);
   };
+
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="body">

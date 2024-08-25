@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
+import Loading from "../Loading/Loading";
 
 function Login() {
   const navigate = useNavigate();
@@ -8,12 +9,14 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false)
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
   const hanldeSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     const userData = {
       email: email,
@@ -44,6 +47,11 @@ function Login() {
     setEmail("");
     setPassword("");
   }
+  setLoading(false);
+}
+
+if(loading){
+  return <Loading/>
 }
 
   return (

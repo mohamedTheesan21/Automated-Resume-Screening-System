@@ -39,4 +39,4 @@ async def add_user(user_data):
 async def user_exists(email: str):
     collection_name = db["users"]
     user = await collection_name.find_one({"email": email})
-    return user_helper(user)
+    return user_helper(user) if user else None
