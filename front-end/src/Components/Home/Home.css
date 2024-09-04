@@ -1,14 +1,14 @@
 .home-body {
-    height: 100vh;
-    background-color: #e7e9ea;
-    /* background: linear-gradient(#014b9a, #00556c); */
+  width: 20vw;
+  height: 90vh;
+  background-color: #e7e9ea;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.home-container{
+.home-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,8 +20,8 @@
   border-radius: 10px;
 }
 
-h1 {
-  font-size: 48px;
+h3 {
   font-family: Arial, sans-serif;
   font-style: italic;
+  text-align: center;
 }

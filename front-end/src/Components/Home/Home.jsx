@@ -44,13 +44,16 @@ function Home() {
   }, [navigate]);
 
   return (
-    <div className="home-body">
+    <div>
       <Navbar />
+    <div className="home-body">
+      
       <div className="home-container">
         {/* <h1>ARSS</h1> */}
         <h3>upload Resumes for screening</h3>
         <PdfUploader />
       </div>
+    </div>
     </div>
   );
 }
