@@ -1,11 +1,12 @@
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import FastAPI, HTTPException, Depends, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from passlib.context import CryptContext
-from Database import add_user, user_exists
+from Database import add_user, user_exists, db
 from Models import UserModel, UserAuth
+from motor.motor_asyncio import AsyncIOMotorGridFSBucket  # Use motor's GridFS
 
 from datetime import timedelta, datetime, timezone
-from typing import Optional
+from typing import Optional, List
 
 from dotenv import load_dotenv
 import os
@@ -25,6 +26,8 @@ app.add_middleware(
     allow_methods=["*"],  # Allows all methods (POST, GET, etc.)
     allow_headers=["*"],  # Allows all headers
 )
+
+bucket = AsyncIOMotorGridFSBucket(db)
 
 # Load environment variables from .env file
 load_dotenv()
@@ -112,6 +115,32 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
 @app.get("/protected")
 async def protected_route(current_user: UserModel = Depends(get_current_user)):
     return {"user": current_user}
-    
-    
 
+@app.post("/upload")
+async def upload_pdfs(files: List[UploadFile] = File(...) ):
+    file_ids = []
+    for file in files:
+        if file.content_type != "application/pdf":
+            raise HTTPException(status_code=400, detail="Only PDF files are allowed")
+        else:
+            # Read the file data
+            file_data = await file.read()
+
+            # Save the file to GridFS using motor's GridFSBucket
+            try:
+                grid_in = bucket.open_upload_stream(
+                    file.filename,
+                    metadata={"content_type": file.content_type}
+                )
+                await grid_in.write(file_data)
+                await grid_in.close()
+
+                # Append file ID to the list
+                file_ids.append(str(grid_in._id))
+            except Exception as e:
+                raise HTTPException(status_code=500, detail=f"An error occurred while uploading the file: {str(e)}")
+
+            # Append the file ID (from GridFS) to the list
+            file_ids.append(str(grid_in._id))
+    
+    return {"file_ids": file_ids, "msg": "Files uploaded successfully"}

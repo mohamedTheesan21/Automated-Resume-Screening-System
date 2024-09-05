@@ -1,11 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
 import PdfUploader from "../PdfUploader/PdfUploader";
 import Navbar from "../Navbar/Navbar";
+import Loading from "../Loading/Loading";
 
 function Home() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const checkAuthentication = async () => {
@@ -22,8 +24,8 @@ function Home() {
         const response = await fetch("http://127.0.0.1:8000/protected", {
           method: "GET",
           headers: {
-            "Authorization": `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         });
 
         if (response.ok) {
@@ -46,14 +48,15 @@ function Home() {
   return (
     <div>
       <Navbar />
-    <div className="home-body">
-      
-      <div className="home-container">
-        {/* <h1>ARSS</h1> */}
-        <h3>upload Resumes for screening</h3>
-        <PdfUploader />
+      <div className="home">
+        <div className="home-body">
+          <div className="home-container">
+            <h3>upload Resumes for screening</h3>
+            <PdfUploader loading={loading} setLoading={setLoading} />
+          </div>
+        </div>
+        <div className="home-body-right">{loading && <Loading />}</div>
       </div>
-    </div>
     </div>
   );
 }

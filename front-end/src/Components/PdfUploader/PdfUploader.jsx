@@ -1,18 +1,44 @@
 import React, { useState } from "react";
 import "./PdfUploader.css";
+import Loading from "../Loading/Loading";
 
-function PdfUploader() {
+function PdfUploader({loading, setLoading}) {
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [skills, setSkills] = useState("");
+  const [education, setEducation] = useState("");
+  const [experience, setExperience] = useState("");
+  
 
   const handleFileChange = (event) => {
     setSelectedFiles(Array.from(event.target.files));
   };
 
-  const handleFileUpload = () => {
+  const handleFileUpload = async() => {
+    setLoading(true);
     if (selectedFiles.length > 0) {
-      console.log("Files uploaded:", selectedFiles);
-      // Add logic here to handle the uploaded files, e.g., upload to server or display
+      const formData = new FormData();
+      selectedFiles.forEach((file) => {
+        formData.append("files", file);
+      });
+
+      try {
+        const response = await fetch("http://127.0.0.1:8000/upload", {
+          method: "POST",
+          body: formData,
+        });
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data.msg);
+          console.log(data.file_ids);
+        } else {
+          const data = await response.json();
+          console.log(data.details);
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
+    setLoading(false);
   };
 
   const handleDrop = (event) => {
@@ -31,8 +57,12 @@ function PdfUploader() {
     setSelectedFiles([]);
   };
 
+  // if (loading) {
+  //   return <Loading />;
+  // }
+
   return (
-    <div>
+    <div className="pdf-uploader-container">
       {!selectedFiles.length > 0 && (
         <div>
           <input
@@ -64,6 +94,32 @@ function PdfUploader() {
           ))}
         </ul>
       )}
+      {selectedFiles.length > 0 && (
+        <button className="cancel-btn" onClick={handleCancel}>
+          Cancel
+        </button>
+      )}
+      <input
+        className="job-description"
+        type="text"
+        value={skills}
+        onChange={(e) => setSkills(e.target.value)}
+        placeholder="Skills"
+      />
+      <input
+        className="job-description"
+        type="text"
+        value={education}
+        onChange={(e) => setEducation(e.target.value)}
+        placeholder="Education"
+      />
+      <input
+        className="job-description"
+        type="text"
+        value={experience}
+        onChange={(e) => setExperience(e.target.value)}
+        placeholder="Experience"
+      />
       <div className="buttons">
         <button
           className="upload-btn"
@@ -72,11 +128,6 @@ function PdfUploader() {
         >
           Upload CVs
         </button>
-        {selectedFiles.length > 0 && (
-          <button className="cancel-btn" onClick={handleCancel}>
-            Cancel
-          </button>
-        )}
       </div>
     </div>
   );
