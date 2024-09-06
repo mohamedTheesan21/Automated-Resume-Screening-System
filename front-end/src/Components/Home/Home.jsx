@@ -4,6 +4,7 @@ import "./Home.css";
 import PdfUploader from "../PdfUploader/PdfUploader";
 import Navbar from "../Navbar/Navbar";
 import Loading from "../Loading/Loading";
+import StreamlitDashboard from "../StreamlitDashboard/StreamlitDashboard";
 
 function Home() {
   const navigate = useNavigate();
@@ -55,7 +56,8 @@ function Home() {
             <PdfUploader loading={loading} setLoading={setLoading} />
           </div>
         </div>
-        <div className="home-body-right">{loading && <Loading />}</div>
+        <div className="home-body-right">{loading && <Loading />}
+        {!loading && <StreamlitDashboard />}</div>
       </div>
     </div>
   );
