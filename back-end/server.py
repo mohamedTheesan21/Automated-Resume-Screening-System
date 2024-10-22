@@ -21,7 +21,7 @@ app = FastAPI()
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://storied-kheer-10a529.netlify.app/"],  # Your Netlify URL or localhost for local development
+    allow_origins=["https://6717bfb2f8230948d5a2b20c--arss-cse.netlify.app/"],  # Your Netlify URL or localhost for local development
     allow_credentials=True,
     allow_methods=["*"],  # Allows all methods (GET, POST, etc.)
     allow_headers=["*"],  # Allows all headers
