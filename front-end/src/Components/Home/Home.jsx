@@ -9,6 +9,7 @@ import StreamlitDashboard from "../StreamlitDashboard/StreamlitDashboard";
 function Home() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [dashboard, setDashboard] = useState(false);
 
   useEffect(() => {
     const checkAuthentication = async () => {
@@ -53,11 +54,11 @@ function Home() {
         <div className="home-body">
           <div className="home-container">
             <h3>upload Resumes for screening</h3>
-            <PdfUploader loading={loading} setLoading={setLoading} />
+            <PdfUploader loading={loading} setLoading={setLoading} dashboard={dashboard} setDashboard={setDashboard}/>
           </div>
         </div>
         <div className="home-body-right">{loading && <Loading />}
-        {!loading && <StreamlitDashboard />}</div>
+        {dashboard && <StreamlitDashboard />}</div>
       </div>
     </div>
   );

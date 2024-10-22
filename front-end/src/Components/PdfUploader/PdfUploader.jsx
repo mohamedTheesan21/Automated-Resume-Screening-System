@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./PdfUploader.css";
 import Loading from "../Loading/Loading";
 
-function PdfUploader({loading, setLoading}) {
+function PdfUploader({setLoading, setDashboard}) {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [skills, setSkills] = useState("");
   const [education, setEducation] = useState("");
@@ -39,6 +39,7 @@ function PdfUploader({loading, setLoading}) {
       }
     }
     setLoading(false);
+    setDashboard(true);
   };
 
   const handleDrop = (event) => {
