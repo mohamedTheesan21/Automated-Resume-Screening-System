@@ -2,7 +2,7 @@ import React from "react";
 
 function StreamlitDashboard() {
   return (
-    <div className="dashboard" style={{ height: "500px", width: "100%" }}>
+    <div className="dashboard" style={{ height: "90vh", width: "100%" }}>
       <iframe
         src="http://localhost:8501"
         width="100%"

@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 from wordcloud import WordCloud
 import random
-
 #simulation
 def simulate():
     batch_size = 100  # Define batch size
@@ -39,7 +38,8 @@ def simulate():
     # print(df_final.head())
     return df_final
 
-df_final = simulate()
+# df_final = simulate()
+df_final = pd.read_csv('processed_resumes.csv')
 print("Dashboard Starting...")
 
 # Set up the Streamlit app
@@ -53,16 +53,21 @@ def generate_wordcloud(text):
     return wordcloud
 
 # Display Word Cloud for Skills in the first column
+skills_list = df_final['Skills']
+    
+print(type(skills_list))
+skills_list = df_final['Skills'].apply(lambda x: x.split()).explode().tolist()
+print(skills_list)
 
 with st.container():
     st.subheader("Word Cloud - Skills")
-    skills_text = ', '.join(df_final['Skills'].explode())
+    # Extract all skills from the dataframe
+    
+    skills_text = ', '.join(skills_list)
     wordcloud = generate_wordcloud(skills_text)
-
     fig, ax = plt.subplots()
     ax.imshow(wordcloud, interpolation='bilinear')
     ax.axis('off')
-    
     st.pyplot(fig)
 
 col1, col2, col3 = st.columns(3)
@@ -70,7 +75,7 @@ col1, col2, col3 = st.columns(3)
 # Skills Distribution
 with col1:
     st.subheader("Skills Distribution")
-    skills_count = df_final['Skills'].explode().value_counts()
+    skills_count = pd.Series(skills_list).value_counts()
     # print(skills_count)
     fig = px.bar(x=skills_count.index, y=skills_count.values, labels={'x': 'Skill', 'y': 'Count'}, title="Skills Distribution")
     st.plotly_chart(fig, use_container_width=True)
