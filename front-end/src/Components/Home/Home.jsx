@@ -7,6 +7,7 @@ import Loading from "../Loading/Loading";
 import StreamlitDashboard from "../StreamlitDashboard/StreamlitDashboard";
 
 function Home() {
+  const backendUrl = "https://automated-resume-screening-system-c0w9.onrender.com"
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [dashboard, setDashboard] = useState(false);
@@ -23,7 +24,7 @@ function Home() {
       }
 
       try {
-        const response = await fetch("http://127.0.0.1:8000/protected", {
+        const response = await fetch(`${backendUrl}/protected`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
