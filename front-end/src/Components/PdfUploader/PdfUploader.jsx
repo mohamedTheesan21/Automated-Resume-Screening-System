@@ -3,6 +3,7 @@ import "./PdfUploader.css";
 import Loading from "../Loading/Loading";
 
 function PdfUploader({setLoading, setDashboard}) {
+  const backendUrl = "https://automated-resume-screening-system-c0w9.onrender.com"
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [skills, setSkills] = useState("");
   const [education, setEducation] = useState("");
@@ -22,7 +23,7 @@ function PdfUploader({setLoading, setDashboard}) {
       });
 
       try {
-        const response = await fetch("http://127.0.0.1:8000/upload", {
+        const response = await fetch(`${backendUrl}/upload`, {
           method: "POST",
           body: formData,
         });

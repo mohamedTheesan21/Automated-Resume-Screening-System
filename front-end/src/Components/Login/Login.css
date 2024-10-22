@@ -1,6 +1,15 @@
 .body {
   height: 100vh;
-  background: linear-gradient(#2100b7, #42006c);
+  /* background: linear-gradient(#2100b7, #42006c); */
+  background-image: url("../Asserts/background.png");
+  background-size: cover;
+  /* Ensures the image covers the entire background */
+  background-repeat: no-repeat;
+  /* Prevents image repetition */
+  background-attachment: fixed;
+  /* Fixes the background image, so it doesn't scroll with the content */
+  background-position: center center;
+  /* Centers the image horizontally and vertically */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -30,7 +39,7 @@
 }
 
 .text {
-  color: #3c009d;
+  color: #14017d;
   font-size: 40px;
   font-weight: 700;
 }
@@ -38,7 +47,7 @@
 .underline {
   width: 61px;
   height: 5px;
-  background-color: #3c009d;
+  background-color: #14017d;
   border-radius: 9px;
 }
 
@@ -63,7 +72,7 @@
 .input label {
   font-size: 20px;
   font-weight: 700;
-  color: #3c009d;
+  color: #14017d;
   margin-left: 20px;
   margin-right: 20px;
 }
@@ -99,7 +108,7 @@
   width: 200px;
   height: 50px;
   color: #fff;
-  background-color: #4c00b4;
+  background-color: #14017d;
   border-radius: 50px;
   font-size: 20px;
   font-weight: 700;
@@ -107,7 +116,7 @@
 }
 
 .submit-btn:hover {
-  background-color: #2f0079;
+  background-color: #0e0253;
 }
 
 .change-btn:hover {
