@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./PdfUploader.css";
-import Loading from "../Loading/Loading";
 
 function PdfUploader({setLoading, setDashboard}) {
   const backendUrl = "https://automated-resume-screening-system-c0w9.onrender.com"
