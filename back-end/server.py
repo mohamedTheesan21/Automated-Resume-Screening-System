@@ -11,6 +11,8 @@ from typing import Optional, List
 from dotenv import load_dotenv
 import os
 
+from test2 import extract_entities
+
 # JWT authentication
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
@@ -123,8 +125,7 @@ async def upload_pdfs(files: List[UploadFile] = File(...) ):
         if file.content_type != "application/pdf":
             raise HTTPException(status_code=400, detail="Only PDF files are allowed")
         else:
-            # Read the file data
-            file_data = await file.read()
+            extract_entities(file)
 
             # Save the file to GridFS using motor's GridFSBucket
             # try:
