@@ -24,7 +24,7 @@ function Navbar() {
                                 <a className="nav-link" href="/aboutus">About Us</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="/contactus">Contact Us</a>
+                                <a className="nav-link" href="mailto:info@arss.com">Contact Us</a>
                             </li>
                             <li className="nav-item">
                                 <button className="logout-btn" onClick={handleClick}>Log out</button>

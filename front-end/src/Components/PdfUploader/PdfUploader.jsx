@@ -73,6 +73,7 @@ function PdfUploader({setLoading, setDashboard}) {
             onChange={handleFileChange}
             style={{ display: "none" }}
             id="file-input"
+            required
           />
           <label
             className="file-input-label"
@@ -106,6 +107,7 @@ function PdfUploader({setLoading, setDashboard}) {
         value={skills}
         onChange={(e) => setSkills(e.target.value)}
         placeholder="Skills"
+        required
       />
       <input
         className="job-description"
@@ -113,6 +115,7 @@ function PdfUploader({setLoading, setDashboard}) {
         value={education}
         onChange={(e) => setEducation(e.target.value)}
         placeholder="Education"
+        required
       />
       <input
         className="job-description"
@@ -120,6 +123,7 @@ function PdfUploader({setLoading, setDashboard}) {
         value={experience}
         onChange={(e) => setExperience(e.target.value)}
         placeholder="Experience"
+        required
       />
       <div className="buttons">
         <button

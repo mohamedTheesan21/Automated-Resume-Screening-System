@@ -1,0 +1,96 @@
+/* Navbar Styles */
+.aboutus-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  background-color: #0c0245;
+  color: white;
+  width: 95vw;
+}
+
+.aboutus-navbar-logo a {
+  margin-left: 10px;
+  font-size: 24px;
+  color: white;
+  text-decoration: none;
+}
+
+.aboutus-navbar-links {
+  display: flex;
+  align-items: center;
+}
+
+.login-button {
+  background-color: white;
+  text-align: center;
+  width: 80px;
+  border-radius: 15px;
+  text-decoration: none;
+  color: black;
+  
+  margin-right: 10px;
+}
+
+.login-button:hover {
+  background-color: rgb(175, 174, 174);
+}
+
+
+.about-us-container {
+  font-family: Arial, sans-serif;
+  color: #333;
+  line-height: 1.6;
+  padding: 20px;
+  max-width: 95vw;
+}
+
+.hero-section {
+  background-image: url("./../Asserts/background.png");
+  background-size: cover;
+  background-position: center;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-align: center;
+}
+
+.overlay {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 50px;
+  border-radius: 8px;
+}
+
+.about-us-details {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.about-us-content,
+.features,
+.mission,
+.contact-info {
+  margin-bottom: 40px;
+}
+
+.features-list {
+  list-style: none;
+  padding: 0;
+}
+
+.features-list li {
+  padding: 10px 0;
+}
+
+.email-link {
+  color: #007bff;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.email-link:hover {
+  text-decoration: underline;
+}

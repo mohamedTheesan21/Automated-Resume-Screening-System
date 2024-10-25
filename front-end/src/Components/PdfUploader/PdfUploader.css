@@ -11,7 +11,7 @@
   width: 100px;
   height: 30px;
   color: #fff;
-  background-color: #1402b1;
+  background-color: #14017d;
   border-radius: 25px;
   font-size: 10px;
   font-weight: 700;
@@ -20,7 +20,7 @@
 }
 
 .upload-btn:hover {
-  background-color: #4c00b4;
+  background-color: #0f0257;
 }
 
 .file-input-label {
@@ -116,4 +116,9 @@
 
 .job-description{
   margin-top: 10px;
+}
+
+.job-description{
+  width: 16vw;
+  height: 20px;
 }

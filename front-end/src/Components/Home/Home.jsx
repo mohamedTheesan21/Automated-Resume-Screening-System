@@ -7,7 +7,7 @@ import Loading from "../Loading/Loading";
 import StreamlitDashboard from "../StreamlitDashboard/StreamlitDashboard";
 
 function Home() {
-  const backendUrl = "https://automated-resume-screening-system-c0w9.onrender.com"
+  const backendUrl = "https://automated-resume-screening-system-c0w9.onrender.com";
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [dashboard, setDashboard] = useState(false);
@@ -17,7 +17,6 @@ function Home() {
       const token = localStorage.getItem("token");
 
       if (!token) {
-        // No token, navigate to login
         console.log("No token found");
         navigate("/");
         return;
@@ -33,8 +32,6 @@ function Home() {
 
         if (response.ok) {
           console.log("User is authenticated");
-          const user = await response.json();
-          console.log(user);
         } else {
           console.log("User is not authenticated");
           navigate("/");
@@ -54,12 +51,50 @@ function Home() {
       <div className="home">
         <div className="home-body">
           <div className="home-container">
-            <h3>upload Resumes for screening</h3>
-            <PdfUploader loading={loading} setLoading={setLoading} dashboard={dashboard} setDashboard={setDashboard}/>
+            <h3>Upload Resumes for Screening</h3>
+            <PdfUploader loading={loading} setLoading={setLoading} dashboard={dashboard} setDashboard={setDashboard} />
           </div>
         </div>
-        <div className="home-body-right">{loading && <Loading />}
-        {dashboard && <StreamlitDashboard />}</div>
+        <div className="home-body-right">
+          {loading && <Loading />}
+          {!loading && (dashboard ? (
+            <StreamlitDashboard />
+          ) : (
+            <div className="about-us-placeholder">
+              <div className="about-us-header">
+                <h2>Welcome to ARSS</h2>
+                <p>Revolutionizing Recruitment with Technology</p>
+              </div>
+              <div className="about-us-content">
+                <h3>How It Works</h3>
+                <p>
+                  Upload resumes and let our advanced system analyze and rank candidates automatically using AI-powered algorithms.
+                </p>
+                <div className="icon-list">
+                  <div className="icon-item">
+                    <span>⚙️</span>
+                    <p>Automated resume parsing</p>
+                  </div>
+                  <div className="icon-item">
+                    <span>🔍</span>
+                    <p>AI-powered candidate ranking</p>
+                  </div>
+                  <div className="icon-item">
+                    <span>🎯</span>
+                    <p>Custom job-specific filters</p>
+                  </div>
+                  <div className="icon-item">
+                    <span>📊</span>
+                    <p>Analytics</p>
+                  </div>
+                </div>
+              </div>
+              <div className="about-us-footer">
+                <p>Start your journey by uploading a resume now to see the magic of automated screening.</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

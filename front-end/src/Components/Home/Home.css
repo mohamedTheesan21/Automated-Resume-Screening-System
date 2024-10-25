@@ -10,11 +10,18 @@
 .home-body {
   width: 20vw;
   height: 90vh;
-  background-color: #e7e9ea;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-image: url("../Asserts/background.png");
+  background-size: cover;
+  /* Ensures the image covers the entire background */
+  background-repeat: no-repeat;
+  /* Prevents image repetition */
+  background-attachment: fixed;
+  /* Fixes the background image, so it doesn't scroll with the content */
+  background-position: center center;
 }
 
 .home-container {
@@ -39,4 +46,88 @@ h3 {
   font-family: Arial, sans-serif;
   font-style: italic;
   text-align: center;
+}
+
+/* About Us Placeholder */
+.about-us-placeholder {
+  text-align: center;
+  padding: 60px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1.2s ease-in-out;
+}
+
+/* Header */
+.about-us-header h2 {
+  font-size: 28px;
+  color: #14017d;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.about-us-header p {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+/* Content */
+.about-us-content h3 {
+  font-size: 24px;
+  color: #007bff;
+  margin-bottom: 20px;
+}
+
+.about-us-content p {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 30px;
+}
+
+.icon-list {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 30px;
+}
+
+.icon-item {
+  text-align: center;
+  font-size: 16px;
+}
+
+.icon-item span {
+  font-size: 40px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.icon-item p {
+  color: #333;
+}
+
+/* Footer */
+.about-us-footer p {
+  font-size: 16px;
+  color: #333;
+  background-color: #14017d;
+  padding: 15px;
+  border-radius: 8px;
+  color: white;
+}
+
+.about-us-footer p:hover {
+  background-color: #0f0257;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

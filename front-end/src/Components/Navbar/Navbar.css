@@ -2,8 +2,9 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    background-color: #d0e7f2;
-    width: 100vw;
+    background-color: #0c0245;
+    max-width: 100vw;
+    max-height: 10vh;
 }
 
 .container-fluid{
@@ -20,7 +21,7 @@
     font-style: italic;
     margin: 15px 0 0 15px;
     text-decoration: none;
-    color: black;
+    color: white;
 }
 
 .navbar-nav{
@@ -37,7 +38,7 @@
 
 .nav-link{
     text-decoration: none;
-    color: black;
+    color: white;
     font-size: 15px;
 }
 
@@ -50,6 +51,5 @@
 }
 
 .logout-btn:hover{
-    background-color: black;
-    color: white;
+    background-color: rgb(231, 231, 231);
 }
