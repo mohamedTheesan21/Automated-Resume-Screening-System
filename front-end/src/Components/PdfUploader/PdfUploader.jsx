@@ -21,6 +21,11 @@ function PdfUploader({setLoading, setDashboard}) {
         formData.append("files", file);
       });
 
+      // Append the skills, education, and experience to the FormData
+      formData.append("skills", skills);
+      formData.append("education", education);
+      formData.append("experience", experience);
+
       try {
         const response = await fetch(`${backendUrl}/upload`, {
           method: "POST",
