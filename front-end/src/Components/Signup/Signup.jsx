@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import Loading from "../Loading/Loading";
 
 function Signup() {
-  const backendUrl = "https://automated-resume-screening-system-c0w9.onrender.com"
+  // const backendUrl = "https://automated-resume-screening-system-c0w9.onrender.com";
+  const backendUrl = "http://127.0.0.1:8000";
   const navigate = useNavigate();
   const [companyName, setCompanyName] = useState("");
   const [email, setEmail] = useState("");
@@ -45,7 +46,7 @@ function Signup() {
       if (response.ok) {
         const data = await response.json();
         console.log(data.msg);
-        navigate("/");
+        navigate("/login");
       } else {
         const errorData = await response.json();
         setError(errorData.detail);
@@ -114,7 +115,7 @@ function Signup() {
             <button type="submit" className="btn submit-btn">
               Sign Up
             </button>
-            <a className="btn change-btn" href="/">
+            <a className="btn change-btn" href="/login">
               Log In
             </a>
           </div>

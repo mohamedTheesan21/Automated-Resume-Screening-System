@@ -39,7 +39,7 @@ def simulate():
     return df_final
 
 # df_final = simulate()
-df_final = pd.read_csv('processed_resumes.csv')
+df_final = pd.read_csv('./back-end/all_resumes_data.csv')
 print("Dashboard Starting...")
 
 # Set up the Streamlit app

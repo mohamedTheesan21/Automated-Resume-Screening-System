@@ -4,7 +4,8 @@ import "./Login.css";
 import Loading from "../Loading/Loading";
 
 function Login() {
-  const backendUrl = "https://automated-resume-screening-system-c0w9.onrender.com"
+  // const backendUrl = "https://automated-resume-screening-system-c0w9.onrender.com";
+  const backendUrl = "http://127.0.0.1:8000";
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");

@@ -7,7 +7,8 @@ import Loading from "../Loading/Loading";
 import StreamlitDashboard from "../StreamlitDashboard/StreamlitDashboard";
 
 function Home() {
-  const backendUrl = "https://automated-resume-screening-system-c0w9.onrender.com";
+  // const backendUrl = "https://automated-resume-screening-system-c0w9.onrender.com";
+  const backendUrl = "http://127.0.0.1:8000";
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [dashboard, setDashboard] = useState(false);

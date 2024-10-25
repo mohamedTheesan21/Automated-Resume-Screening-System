@@ -1,3 +1,4 @@
+import pandas as pd
 import torch
 from transformers import BertTokenizerFast, BertForTokenClassification
 from test_utils import preprocess_data, idx2tag, predict_on_chunks
@@ -15,24 +16,23 @@ model.to(DEVICE)
 
 
 ########################code to get the pdfs here################################
-def extract_entities(data):
+def extract_entities(data, Name):
     
-    resume_text, references = preprocess_data(data)
+    resume_text, References = preprocess_data(data)
     entities = predict_on_chunks(model, TOKENIZER, idx2tag,
                     DEVICE, resume_text, MAX_LEN)
-    print({'entities': entities})
+    
+    # Separate entities by category
+    Skills = ', '.join([entity['text'] for entity in entities if entity['entity'] == 'Skills'])
+    Education = ', '.join([entity['text'] for entity in entities if entity['entity'] == 'Education'])
+    Experience = ', '.join([entity['text'] for entity in entities if entity['entity'] == 'Experience'])
 
-    skills = [entity['text'] for entity in entities if entity['entity'] == 'Skills']
-    joined_skills = ', '.join(skills)
-    education = [entity['text'] for entity in entities if entity['entity'] == 'Education']
-    joined_education = ', '.join(education)
-    experience = [entity['text'] for entity in entities if entity['entity'] == 'Experience']
-    joined_experience = ', '.join(experience)
+    resume_data_df = pd.DataFrame(columns=['Name', 'Skills', 'Education', 'Experience', 'References'])
 
-    print("\n\n\n\n\n\n\n\n\n")
-    print({'skills': joined_skills})
-    print({'education': joined_education})
-    print({'experience': joined_experience})
+    # Append to DataFrame
+    resume_data_df.loc[len(resume_data_df)] = [Name, Skills, Education, Experience, References]
+    
+    return resume_data_df
 
 # score part have to do here
 

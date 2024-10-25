@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import "./PdfUploader.css";
 
 function PdfUploader({setLoading, setDashboard}) {
-  const backendUrl = "https://automated-resume-screening-system-c0w9.onrender.com"
+  // const backendUrl = "https://automated-resume-screening-system-c0w9.onrender.com";
+  const backendUrl = "http://127.0.0.1:8000";
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [skills, setSkills] = useState("");
   const [education, setEducation] = useState("");
@@ -34,7 +35,6 @@ function PdfUploader({setLoading, setDashboard}) {
         if (response.ok) {
           const data = await response.json();
           console.log(data.msg);
-          console.log(data.file_ids);
         } else {
           const data = await response.json();
           console.log(data.details);

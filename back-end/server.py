@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Depends, File, UploadFile
+from fastapi import FastAPI, HTTPException, Depends, File, UploadFile, Form
 from fastapi.middleware.cors import CORSMiddleware
 from passlib.context import CryptContext
 from Database import add_user, user_exists, db
@@ -10,6 +10,10 @@ from typing import Optional, List
 
 from dotenv import load_dotenv
 import os
+import pandas as pd
+import io
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
 from test2 import extract_entities
 
@@ -119,29 +123,45 @@ async def protected_route(current_user: UserModel = Depends(get_current_user)):
     return {"user": current_user}
 
 @app.post("/upload")
-async def upload_pdfs(files: List[UploadFile] = File(...) ):
-    file_ids = []
+async def upload_pdfs(
+    files: List[UploadFile] = File(...),
+    skills: str = Form(...),
+    education: str = Form(...),
+    experience: str = Form(...),
+):
+    
+    # Initialize an empty DataFrame to store all resume data
+    all_resumes_df = pd.DataFrame(columns=['Name', 'Skills', 'Education', 'Experience', 'References', 'Score'])
+
+    # Initialize a vectorizer for the provided skills
+    vectorizer = CountVectorizer()
+    skills_vector = vectorizer.fit_transform([skills])
+
     for file in files:
         if file.content_type != "application/pdf":
             raise HTTPException(status_code=400, detail="Only PDF files are allowed")
         else:
-            extract_entities(file)
+            # Read the file as bytes
+            file_content = await file.read()
+        
+            # Convert bytes to a BytesIO object to be compatible with pdfminer
+            pdf_io = io.BytesIO(file_content)
+            # Process the file and get the extracted entities as a DataFrame
+            resume_df = extract_entities(pdf_io, file.filename)
+            
+            # Append to the main DataFrame
+            all_resumes_df = pd.concat([all_resumes_df, resume_df], ignore_index=True)
 
-            # Save the file to GridFS using motor's GridFSBucket
-            # try:
-            #     grid_in = bucket.open_upload_stream(
-            #         file.filename,
-            #         metadata={"content_type": file.content_type}
-            #     )
-            #     await grid_in.write(file_data)
-            #     await grid_in.close()
+    # Calculate cosine similarity for each resume's skills
+    for index, row in all_resumes_df.iterrows():
+        # Create a vector for the resume's skills
+        resume_vector = vectorizer.transform([row['Skills']])
+        
+        # Calculate cosine similarity
+        similarity_score = cosine_similarity(skills_vector, resume_vector)[0][0]
+        all_resumes_df.at[index, 'Score'] = similarity_score  # Assign score to the DataFrame row
 
-            #     # Append file ID to the list
-            #     file_ids.append(str(grid_in._id))
-            # except Exception as e:
-            #     raise HTTPException(status_code=500, detail=f"An error occurred while uploading the file: {str(e)}")
-
-            # # Append the file ID (from GridFS) to the list
-            # file_ids.append(str(grid_in._id))
+    # Save the combined DataFrame to a CSV file
+    all_resumes_df.to_csv("all_resumes_data.csv", index=False)
     
-    return {"file_ids": file_ids, "msg": "Files uploaded successfully"}
+    return {"msg": "Files processed and saved to CSV successfully."}
