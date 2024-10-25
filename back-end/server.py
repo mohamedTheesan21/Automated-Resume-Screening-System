@@ -127,20 +127,20 @@ async def upload_pdfs(files: List[UploadFile] = File(...) ):
             file_data = await file.read()
 
             # Save the file to GridFS using motor's GridFSBucket
-            try:
-                grid_in = bucket.open_upload_stream(
-                    file.filename,
-                    metadata={"content_type": file.content_type}
-                )
-                await grid_in.write(file_data)
-                await grid_in.close()
+            # try:
+            #     grid_in = bucket.open_upload_stream(
+            #         file.filename,
+            #         metadata={"content_type": file.content_type}
+            #     )
+            #     await grid_in.write(file_data)
+            #     await grid_in.close()
 
-                # Append file ID to the list
-                file_ids.append(str(grid_in._id))
-            except Exception as e:
-                raise HTTPException(status_code=500, detail=f"An error occurred while uploading the file: {str(e)}")
+            #     # Append file ID to the list
+            #     file_ids.append(str(grid_in._id))
+            # except Exception as e:
+            #     raise HTTPException(status_code=500, detail=f"An error occurred while uploading the file: {str(e)}")
 
-            # Append the file ID (from GridFS) to the list
-            file_ids.append(str(grid_in._id))
+            # # Append the file ID (from GridFS) to the list
+            # file_ids.append(str(grid_in._id))
     
     return {"file_ids": file_ids, "msg": "Files uploaded successfully"}

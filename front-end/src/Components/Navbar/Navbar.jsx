@@ -7,7 +7,7 @@ function Navbar() {
 
     const handleClick = () => {
         localStorage.removeItem("token");
-        navigate("/");
+        navigate("/login");
     }
 
     return (
@@ -21,7 +21,7 @@ function Navbar() {
                                 <a className="nav-link" href="/home">Home</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="/aboutus">About Us</a>
+                                <a className="nav-link" href="/">About Us</a>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href="mailto:info@arss.com">Contact Us</a>

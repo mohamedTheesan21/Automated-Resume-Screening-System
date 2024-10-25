@@ -8,10 +8,10 @@ const AboutUs = () => {
       {/* Navigation Bar */}
       <nav className="aboutus-navbar">
         <div className="aboutus-navbar-logo">
-          <Link to="/aboutus">ARSS</Link>
+          <Link to="/">ARSS</Link>
         </div>
         <div className="aboutus-navbar-links">
-          <Link to="/" className="login-button">Login</Link>
+          <Link to="/login" className="login-button">Login</Link>
         </div>
       </nav>
 
