@@ -17,23 +17,23 @@ model.to(DEVICE)
 
 ########################code to get the pdfs here################################
 def extract_entities(data, Name):
-    
-    resume_text, References = preprocess_data(data)
-    entities = predict_on_chunks(model, TOKENIZER, idx2tag,
-                    DEVICE, resume_text, MAX_LEN)
-    
-    # Separate entities by category
-    Skills = ', '.join([entity['text'] for entity in entities if entity['entity'] == 'Skills'])
-    Education = ', '.join([entity['text'] for entity in entities if entity['entity'] == 'Education'])
-    Experience = ', '.join([entity['text'] for entity in entities if entity['entity'] == 'Experience'])
 
-    resume_data_df = pd.DataFrame(columns=['Name', 'Skills', 'Education', 'Experience', 'References'])
+    try :
+        resume_text, References = preprocess_data(data)
+        entities = predict_on_chunks(model, TOKENIZER, idx2tag,
+                        DEVICE, resume_text, MAX_LEN)
+        
+        # Separate entities by category
+        Skills = ', '.join([entity['text'] for entity in entities if entity['entity'] == 'Skills'])
+        Education = ', '.join([entity['text'] for entity in entities if entity['entity'] == 'Degree'])
+        Experience = ', '.join([entity['text'] for entity in entities if entity['entity'] == 'Designation'])
 
-    # Append to DataFrame
-    resume_data_df.loc[len(resume_data_df)] = [Name, Skills, Education, Experience, References]
-    
-    return resume_data_df
+        resume_data_df = pd.DataFrame(columns=['Name', 'Skills', 'Education', 'Experience', 'References'])
 
-# score part have to do here
-
-##in a loop read all the files and extract information to a dataframe
+        # Append to DataFrame
+        resume_data_df.loc[len(resume_data_df)] = [Name, Skills, Education, Experience, References]
+        
+        return resume_data_df
+    except Exception as e:
+        print(e)
+        return None

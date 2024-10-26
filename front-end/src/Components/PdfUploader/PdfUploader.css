@@ -72,9 +72,9 @@
 /* Style for each list item */
 .pdfs li {
   padding: 8px;
-  border-bottom: 1px solid #ddd; /* Add a border between items */
-  font-size: 14px; /* Font size for list items */
-  color: #333; /* Font color for list items */
+  border-bottom: 1px solid #ddd;
+  font-size: 14px;
+  color: #333;
 }
 
 /* Remove the border for the last item */
