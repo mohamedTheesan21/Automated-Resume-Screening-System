@@ -130,6 +130,10 @@ async def upload_pdfs(
     experience: str = Form(...),
 ):
     
+    input_skills = skills.split(",")  # Convert the input string to a list of skills
+
+    # 
+    
     # Initialize an empty DataFrame to store all resume data
     all_resumes_df = pd.DataFrame(columns=['Name', 'Skills', 'Education', 'Experience', 'References', 'Score'])
 
@@ -147,7 +151,7 @@ async def upload_pdfs(
             # Convert bytes to a BytesIO object to be compatible with pdfminer
             pdf_io = io.BytesIO(file_content)
             # Process the file and get the extracted entities as a DataFrame
-            resume_df = extract_entities(pdf_io, file.filename)
+            resume_df = extract_entities(pdf_io, file.filename,input_skills)
             
             # Append to the main DataFrame
             all_resumes_df = pd.concat([all_resumes_df, resume_df], ignore_index=True)

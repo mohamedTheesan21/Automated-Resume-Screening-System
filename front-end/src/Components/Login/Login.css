@@ -1,6 +1,5 @@
 .body {
   height: 100vh;
-  /* background: linear-gradient(#2100b7, #42006c); */
   background-image: url("../Asserts/background.png");
   background-size: cover;
   /* Ensures the image covers the entire background */
