@@ -2,6 +2,7 @@ import pandas as pd
 import torch
 from transformers import BertTokenizerFast, BertForTokenClassification
 from test_utils import preprocess_data, idx2tag, predict_on_chunks
+import re
 
 MAX_LEN = 512
 NUM_LABELS = 12
@@ -32,10 +33,14 @@ def extract_entities(data, Name, input_skills):
         # Separate entities by category
         # Skills = ', '.join([entity['text'] for entity in entities if entity['entity'] == 'Skills'])
         Skills = ', '.join(matched_skills)
+        # Education = ', '.join(
+        #     [entity['text'] for entity in entities if entity['entity'] == 'Degree'])
+        # Experience = ', '.join(
+        #     [entity['text'] for entity in entities if entity['entity'] == 'Designation'])
         Education = ', '.join(
-            [entity['text'] for entity in entities if entity['entity'] == 'Degree'])
+            [re.sub(r'[^\w\s]+', '', entity['text']) for entity in entities if entity['entity'] == 'Degree'])
         Experience = ', '.join(
-            [entity['text'] for entity in entities if entity['entity'] == 'Designation'])
+            [re.sub(r'[^\w\s]+', '', entity['text']) for entity in entities if entity['entity'] == 'Designation'])
 
         resume_data_df = pd.DataFrame(
             columns=['Name', 'Skills', 'Education', 'Experience', 'References'])
@@ -72,7 +77,7 @@ def compare_and_update_skills(extracted_skills, input_skills):
 
 
 skills_array = [
-    "Python", "Java", "SQL", "Data Analysis", "Machine Learning", "Project Management", "Communication",
+    "Python","C", "Java", "SQL", "Data Analysis", "Machine Learning","Teamwork" "Project Management", "Communication",
     "Teamwork", "Problem Solving", "Leadership", "React", "FastAPI", "Natural Language Processing",
     "Time Management", "Critical Thinking", "Adaptability", "HTML", "CSS", "JavaScript", "Cloud Computing",
     "DevOps", "Docker", "Kubernetes", "Git", "Version Control", "Agile Methodology", "Scrum",

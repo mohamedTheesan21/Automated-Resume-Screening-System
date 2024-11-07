@@ -14,6 +14,8 @@ import pandas as pd
 import io
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+from sentence_transformers import SentenceTransformer
+import numpy as np
 
 from test2 import extract_entities
 
@@ -129,11 +131,11 @@ async def upload_pdfs(
     education: str = Form(...),
     experience: str = Form(...),
 ):
-    
     input_skills = skills.split(",")  # Convert the input string to a list of skills
+    model = SentenceTransformer("paraphrase-MiniLM-L6-v2")
+    input_education_embedding = model.encode(education)  # Create embedding for input education
+    input_experience_embedding = model.encode(experience)  # Create embedding for input experience
 
-    # 
-    
     # Initialize an empty DataFrame to store all resume data
     all_resumes_df = pd.DataFrame(columns=['Name', 'Skills', 'Education', 'Experience', 'References', 'Score'])
 
@@ -150,22 +152,64 @@ async def upload_pdfs(
         
             # Convert bytes to a BytesIO object to be compatible with pdfminer
             pdf_io = io.BytesIO(file_content)
+            
             # Process the file and get the extracted entities as a DataFrame
-            resume_df = extract_entities(pdf_io, file.filename,input_skills)
+            resume_df = extract_entities(pdf_io, file.filename, input_skills)
             
             # Append to the main DataFrame
             all_resumes_df = pd.concat([all_resumes_df, resume_df], ignore_index=True)
 
-    # Calculate cosine similarity for each resume's skills
+    # Calculate cosine similarity for each resume's skills, education, and experience
     for index, row in all_resumes_df.iterrows():
-        # Create a vector for the resume's skills
-        resume_vector = vectorizer.transform([row['Skills']])
+        resume_skills = row['Skills'].split(",")
+        # Calculate skill similarity
+        skill_similarity_score = calculate_skill_score(input_skills, resume_skills)
         
-        # Calculate cosine similarity
-        similarity_score = cosine_similarity(skills_vector, resume_vector)[0][0]
-        all_resumes_df.at[index, 'Score'] = similarity_score  # Assign score to the DataFrame row
+        # Calculate cosine similarity for education
+        resume_education_embedding = model.encode(row['Education'])
+        education_similarity_score = cosine_similarity(
+            [input_education_embedding], [resume_education_embedding]
+        )[0][0]
+
+        # Calculate cosine similarity for experience
+        resume_experience_embedding = model.encode(row['Experience'])
+        experience_similarity_score = cosine_similarity(
+            [input_experience_embedding], [resume_experience_embedding]
+        )[0][0]
+
+        # Calculate the final score with weighted average (60% Skills, 20% Education, 20% Experience)
+        final_score = (
+            (skill_similarity_score * 0.6) + 
+            (education_similarity_score * 0.2) + 
+            (experience_similarity_score * 0.2)
+        )
+        # print("index", index)
+        # print("skill_similarity_score", skill_similarity_score)
+        # print("education_similarity_score", education_similarity_score)
+        # print("experience_similarity_score", experience_similarity_score)
+        # print("/n")
+        # Assign final score to the DataFrame row
+        all_resumes_df.at[index, 'Score'] = final_score
 
     # Save the combined DataFrame to a CSV file
     all_resumes_df.to_csv("all_resumes_data.csv", index=False)
     
     return {"msg": "Files processed and saved to CSV successfully."}
+
+def calculate_skill_score(input_skills, resume_skills):
+    model = SentenceTransformer("paraphrase-MiniLM-L6-v2")
+    
+    # Embed each skill in both input_skills and resume_skills
+    input_skills_embeddings = model.encode(input_skills)
+    resume_skills_embeddings = model.encode(resume_skills)
+    
+    # Compute pairwise cosine similarity
+    similarity_matrix = cosine_similarity(input_skills_embeddings, resume_skills_embeddings)
+    
+    # Calculate the maximum similarity for each input skill
+    max_similarities = np.max(similarity_matrix, axis=1)
+    
+    # Calculate the average similarity score for skills
+    skill_score = np.mean(max_similarities)
+    
+    return skill_score

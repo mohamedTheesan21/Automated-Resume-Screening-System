@@ -25,9 +25,26 @@ references_titles = [
     "Supporting Contacts Provided on Request"
 ]
 
+# def remove_below_references(text):
+#     # Join the reference titles into a regex pattern (case insensitive)
+#     pattern = '|'.join(re.escape(title) for title in references_titles)
+    
+#     # Find where any of the references section starts and truncate everything below it
+#     match = re.search(pattern, text, re.IGNORECASE)
+#     references = ""
+#     if match:
+#         # Keep text up to the start of the References section
+#         references = text[match.start():]
+#         text = text[:match.start()]
+
+    
+#     return text, references
+
 def remove_below_references(text):
+    references_titles = ['References', 'Referrals','Reference']  # Update as needed
+    
     # Join the reference titles into a regex pattern (case insensitive)
-    pattern = '|'.join(re.escape(title) for title in references_titles)
+    pattern = r'|'.join([r'\b' + re.escape(title) + r'\b' for title in references_titles])
     
     # Find where any of the references section starts and truncate everything below it
     match = re.search(pattern, text, re.IGNORECASE)
@@ -36,9 +53,9 @@ def remove_below_references(text):
         # Keep text up to the start of the References section
         references = text[match.start():]
         text = text[:match.start()]
-
     
-    return text, references
+    return text,references
+
 
 
 def preprocess_data(data):
@@ -46,6 +63,8 @@ def preprocess_data(data):
     text = text.replace("\n", " ")
     text = text.replace("\f", " ")
     text = re.sub(r'[^\x00-\x7F]+', ' ', text)
+    # Replace pipe '|' with space
+    text = text.replace("|", ",")
     text, references= remove_below_references(text)
 
     return text, references
