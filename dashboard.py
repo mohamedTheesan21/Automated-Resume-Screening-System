@@ -20,7 +20,7 @@ def generate_wordcloud(text):
 df_final['Skills'] = df_final['Skills'].astype(str)
 
 # Split, explode, and convert to list
-skills_list = df_final['Skills'].apply(lambda x: x.split(" ")).explode().tolist()
+skills_list = df_final['Skills'].apply(lambda x: x.split(",")).explode().tolist()
 print(type(skills_list))  # Should be <class 'list'>
 
 
